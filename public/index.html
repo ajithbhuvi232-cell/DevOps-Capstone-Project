@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DevOps Dashboard</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: white;
+      text-align: center;
+    }
+
+    .container {
+      margin-top: 100px;
+    }
+
+    h1 {
+      font-size: 42px;
+    }
+
+    .status {
+      margin-top: 20px;
+      font-size: 22px;
+      padding: 12px 20px;
+      border-radius: 10px;
+      display: inline-block;
+      background: #00c853;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    }
+
+    .time {
+      margin-top: 15px;
+      font-size: 16px;
+      color: #ddd;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>🚀 DevOps Pipeline Dashboard</h1>
+
+    <div class="status" id="status">Checking...</div>
+
+    <div class="time" id="time"></div>
+  </div>
+
+  <script>
+    async function getStatus() {
+      try {
+        const res = await fetch('/health');
+        const data = await res.json();
+
+        document.getElementById('status').innerText = data.status;
+        document.getElementById('time').innerText =
+          "Last Updated: " + new Date(data.time).toLocaleTimeString();
+      } catch (err) {
+        document.getElementById('status').innerText = "DOWN ❌";
+        document.getElementById('status').style.background = "red";
+      }
+    }
+
+    getStatus();
+    setInterval(getStatus, 3000);
+  </script>
+
+</body>
+</html>
