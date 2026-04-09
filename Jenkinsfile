@@ -33,15 +33,15 @@ pipeline {
 
         stage('Deploy to App Server') {
             steps {
-                sshagent(['app_server_key']) {
-                    sh '''
-                    ssh -o StrictHostKeyChecking=no $APP_SERVER << EOF
-                    docker pull $DOCKER_IMAGE
-                    docker stop car-app || true
-                    docker rm car-app || true
-                    docker run -d -p 3000:3000 --name car-app $DOCKER_IMAGE
-                    EOF
-                    '''
+                sshagent(['app_server-key']) {
+                    sh '''
+                    ssh -o StrictHostKeyChecking=no $APP_SERVER "
+                    docker pull $DOCKER_IMAGE &&
+                    docker stop car-app || true &&
+                    docker rm car-app || true &&
+                    docker run -d -p 3000:3000 --name car-app $DOCKER_IMAGE
+                    "
+                 '''  
                 }
             }
         }
