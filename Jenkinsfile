@@ -10,7 +10,7 @@ pipeline {
 
         stage('Clone Code') {
             steps {
-                git 'https://github.com/ajithbhuvi232-cell/DevOps-Capstone-Project.git'
+                git branch: 'main', url: 'https://github.com/ajithbhuvi232-cell/DevOps-Capstone-Project.git'
             }
         }
 
